@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(DIJKSTRAS_SRC_FILES
   src/dijkstras.h
   src/dijkstras.cpp
+  src/dijkstras_main.cpp
 )
 
 add_executable(dijkstra_main
@@ -19,6 +20,7 @@ add_executable(dijkstra_main
 set(LADDER_SRC_FILES
   src/ladder.h
   src/ladder.cpp
+  src/ladder_main.cpp
 )
 
 add_executable(ladder_main

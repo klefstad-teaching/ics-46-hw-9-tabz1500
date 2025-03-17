@@ -1,0 +1,4 @@
+/home/yelantab/ICS 46/ics-46-hw-9-tabz1500/build/CMakeFiles/dijkstra_main.dir
+/home/yelantab/ICS 46/ics-46-hw-9-tabz1500/build/CMakeFiles/ladder_main.dir
+/home/yelantab/ICS 46/ics-46-hw-9-tabz1500/build/CMakeFiles/edit_cache.dir
+/home/yelantab/ICS 46/ics-46-hw-9-tabz1500/build/CMakeFiles/rebuild_cache.dir

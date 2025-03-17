@@ -63,7 +63,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             string lower_word = word;
             transform(lower_word.begin(), lower_word.end(), lower_word.begin(), ::tolower);
 
-            if (is_adjacent(lower_end, lower_word)){
+            if (is_adjacent(last_word, lower_word)){
                 if (visited.find(lower_word) == visited.end()){
                     visited.insert(lower_word);
                     vector<string> new_ladder = ladder;
@@ -89,4 +89,24 @@ void load_words(set<string> & word_list, const string& file_name){
     while(in >> word){
         word_list.insert(word);
     }
+}
+
+void print_word_ladder(const vector<string>& ladder){
+    for(auto word: ladder){
+        cout << word << " ";
+    }
+    cout << endl;
+}
+
+
+#define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
+void verify_word_ladder() {
+    set<string> word_list;
+    load_words(word_list, "./src/words.txt");
+    my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
+    my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
+    my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
+    my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
+    my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
 }
