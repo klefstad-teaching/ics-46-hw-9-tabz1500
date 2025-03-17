@@ -43,13 +43,15 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     queue<vector<string>> ladder_queue;
     ladder_queue.push(vector<string>{begin_word});
     set<string> visited;
-    string lower = begin_word;
-    transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
-    visited.insert(lower);
+    string lower_begin = begin_word;
+    transform(lower_begin.begin(), lower_begin.end(), lower_begin.begin(), ::tolower);
+    visited.insert(lower_begin);
 
     string lower_end = end_word;
     transform(lower_end.begin(), lower_end.end(), lower_end.begin(), ::tolower);
 
+    //checks to see if first and last are the same
+    if(lower_begin == lower_end) return ladder_queue.back();
 
     while (!ladder_queue.empty()){
         vector<string> ladder = ladder_queue.front();
@@ -58,14 +60,15 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
         transform(last_word.begin(), last_word.end(), last_word.begin(), ::tolower);
 
         for(auto word: word_list){
-            transform(word.begin(), word.end(), word.begin(), ::tolower);
+            string lower_word = word;
+            transform(lower_word.begin(), lower_word.end(), lower_word.begin(), ::tolower);
 
-            if (is_adjacent(last_word, word)){
-                if (visited.find(word) == visited.end()){
-                    visited.insert(word);
+            if (is_adjacent(lower_end, lower_word)){
+                if (visited.find(lower_word) == visited.end()){
+                    visited.insert(lower_word);
                     vector<string> new_ladder = ladder;
                     new_ladder.push_back(word);
-                    if(word == lower_end) return new_ladder;
+                    if(lower_word == lower_end) return new_ladder;
                     ladder_queue.push(new_ladder);
                 }
             }
@@ -74,4 +77,16 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 
     error(begin_word, end_word, "No ladder found!");
     return vector<string>{};
+}
+
+void load_words(set<string> & word_list, const string& file_name){
+    string word;
+    ifstream in(file_name);
+    if (!in) {
+        error("", "", "unable to find input file");
+        return;
+    }
+    while(in >> word){
+        word_list.insert(word);
+    }
 }
