@@ -7,32 +7,51 @@ void error(string word1, string word2, string msg){
     cout << msg << "words: " << word1 << ", " << word2 << endl;
 }
 
-bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
+bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int len1 = str1.length();
     int len2 = str2.length();
 
-    if(abs(len1 - len2) > d) return false;
+    if (abs(len1 - len2) > d) {
+        return false;
+    }
+
     int i = 0, j = 0;
     int differences = 0;
 
-    while(i < len1 && j < len2){
-        if(str1[i] != str2[j]){
-            ++differences;
-            if(differences > d) return false;
+    while (i < len1 && j < len2) {
+        if (str1[i] != str2[j]) {
+            differences++;
+            if (differences > d) {
+                return false;
+            }
 
-            if(len1 > len2) ++i;
-            else if (len1 < len2) ++j;
-            else {++i; ++j;}
-        }
-        else{
-            ++i;
-            ++j;
+            if (len1 > len2) {
+                i++;
+            } else if (len1 < len2) {
+                j++;
+            } else {
+                i++;
+                j++;
+            }
+        } else {
+            i++;
+            j++;
         }
     }
 
-    differences += (len1 - i) + (len2 - j);
+    while (i < len1) {
+        differences++;
+        i++;
+    }
+
+    while (j < len2) {
+        differences++;
+        j++;
+    }
+
     return differences <= d;
 }
+
 
 bool is_adjacent(const string& word1, const string& word2){
     return edit_distance_within(word1, word2, 1);
@@ -51,7 +70,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     transform(lower_end.begin(), lower_end.end(), lower_end.begin(), ::tolower);
 
     //checks to see if first and last are the same
-    if(lower_begin == lower_end) return ladder_queue.back();
+    if(lower_begin == lower_end) return vector<string>{};
 
     while (!ladder_queue.empty()){
         vector<string> ladder = ladder_queue.front();
@@ -92,8 +111,12 @@ void load_words(set<string> & word_list, const string& file_name){
 }
 
 void print_word_ladder(const vector<string>& ladder){
+    if(ladder.empty()){
+        cout << "No word ladder found." << endl;
+        return;
+    }
     for(auto word: ladder){
-        cout << word << " ";
+        cout << "Word ladder found: " << word << " ";
     }
     cout << endl;
 }
