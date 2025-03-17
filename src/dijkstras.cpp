@@ -1,5 +1,4 @@
 #include "dijkstras.h"
-#include <algorithm>
 #include <stack>
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
